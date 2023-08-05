@@ -2,7 +2,7 @@
 
 The global stats service retrieves geographical and currency conversion information for various countries.
 
-The following components and tools are used in this API:
+The following components and tools are used in this service:
 
 - [Java](https://www.java.com/)
 - [Spring Boot](https://spring.io/projects/spring-boot/)
