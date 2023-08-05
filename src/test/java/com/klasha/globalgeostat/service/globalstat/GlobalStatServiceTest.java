@@ -8,10 +8,13 @@ import com.klasha.globalgeostat.commons.geo.dto.currency.CurrencyData;
 import com.klasha.globalgeostat.commons.geo.dto.population.CityPopulationData;
 import com.klasha.globalgeostat.commons.geo.dto.population.CountryPopulationData;
 import com.klasha.globalgeostat.commons.geo.dto.position.PositionData;
+import com.klasha.globalgeostat.commons.geo.dto.state.State;
+import com.klasha.globalgeostat.commons.geo.dto.state.StateData;
 import com.klasha.globalgeostat.core.exception.ConflictException;
 import com.klasha.globalgeostat.core.exception.ResourceNotFoundException;
 import com.klasha.globalgeostat.service.globalstat.dto.ConversionInfo;
 import com.klasha.globalgeostat.service.globalstat.dto.CountryInfo;
+import com.klasha.globalgeostat.service.globalstat.dto.StateInfo;
 import com.klasha.globalgeostat.util.GlobalStatUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -154,4 +157,33 @@ public class GlobalStatServiceTest {
         });
     }
 
+    @Test
+    public void testGetStateInfo() throws Exception {
+        String country = "Nigeria";
+
+        List<State> states = List.of(
+            GlobalStatUtil.toMockedState("Lagos", "LG"),
+            GlobalStatUtil.toMockedState("Oyo", "OY")
+        );
+
+        StateData stateData = GlobalStatUtil.toMockedStateData(states);
+
+        when(geoService.getStates(country)).thenReturn(stateData);
+        when(geoService.getCities(country, "Lagos")).thenReturn(List.of("Berger", "Ikeja"));
+        when(geoService.getCities(country, "Oyo")).thenReturn(List.of("Ibadan", "Challenge"));
+
+        // Test the method
+        List<StateInfo> result = service.getStateInfo(country);
+
+        // Verify that the relevant methods were called
+        verify(geoService).getStates(country);
+        verify(geoService).getCities(country, "Lagos");
+        verify(geoService).getCities(country, "Oyo");
+
+        // Verify the correctness of the result
+        assertEquals(2, result.size());
+        assertEquals("Lagos", result.get(0).getName());
+        assertEquals("LG", result.get(0).getStateCode());
+        assertEquals(2, result.get(0).getCities().size());
+    }
 }

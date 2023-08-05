@@ -6,6 +6,8 @@ import com.klasha.globalgeostat.commons.geo.dto.population.CityPopulationData;
 import com.klasha.globalgeostat.commons.geo.dto.population.CountryPopulationData;
 import com.klasha.globalgeostat.commons.geo.dto.population.PopulationCount;
 import com.klasha.globalgeostat.commons.geo.dto.position.PositionData;
+import com.klasha.globalgeostat.commons.geo.dto.state.State;
+import com.klasha.globalgeostat.commons.geo.dto.state.StateData;
 
 import java.util.List;
 
@@ -55,6 +57,19 @@ public class GlobalStatUtil {
         return PositionData.builder()
             .lat(lat)
             .lng(lng)
+            .build();
+    }
+
+    public static StateData toMockedStateData(List<State> states) {
+        return StateData.builder()
+            .states(states)
+            .build();
+    }
+
+    public static State toMockedState(String name, String stateCode) {
+        return State.builder()
+            .name(name)
+            .stateCode(stateCode)
             .build();
     }
 }

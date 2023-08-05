@@ -9,19 +9,16 @@ import com.klasha.globalgeostat.service.globalstat.dto.StateInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.klasha.globalgeostat.service.globalstat.GlobalStatService;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/v1")
 public class GlobalStatController {
     private final GlobalStatService globalStatService;
 
@@ -45,7 +42,7 @@ public class GlobalStatController {
         return new ResponseEntity<>(new Response<>(stateInfo), HttpStatus.OK);
     }
 
-    @PostMapping(path = "/convert/{country}")
+    @GetMapping(path = "/convert/{country}")
     public ResponseEntity<Response<ConversionInfo>> currencyConversion(
         @PathVariable String country,
         @RequestParam BigDecimal amount,
