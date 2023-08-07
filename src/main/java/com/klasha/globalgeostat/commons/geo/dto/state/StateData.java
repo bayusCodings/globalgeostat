@@ -8,5 +8,8 @@ import java.util.List;
 @Data
 @Builder
 public class StateData {
+    private String name;
+    private String iso2;
+    private String iso3;
     private List<State> states;
 }
